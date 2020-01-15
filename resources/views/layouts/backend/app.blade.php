@@ -37,7 +37,7 @@
     @stack('css')
 
 </head>
-<body class="theme-blue">
+<body class="{{Request::is('admin*') ? 'theme-blue' : 'theme-red' }}">
 
 
      <!-- Page Loader -->
