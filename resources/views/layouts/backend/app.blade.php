@@ -27,6 +27,8 @@
     <!-- Morris Chart Css-->
     <link href="{{asset('public/assets/backend/plugins/morrisjs/morris.css')}}" rel="stylesheet" />
 
+    @stack('css')
+
     <!-- Custom Css -->
     <link href="{{asset('public/assets/backend/css/style.css')}}" rel="stylesheet">
 
@@ -34,7 +36,7 @@
     <link href="{{asset('public/assets/backend/css/themes/all-themes.css')}}" rel="stylesheet" />
 
     
-    @stack('css')
+    
 
 </head>
 <body class="{{Request::is('admin*') ? 'theme-blue' : 'theme-red' }}">
@@ -94,40 +96,18 @@
     <!-- Waves Effect Plugin Js -->
     <script src="{{asset('public/assets/backend/plugins/node-waves/waves.js')}}"></script>
 
-    <!-- Jquery CountTo Plugin Js -->
-    <script src="{{asset('public/assets/backend/plugins/jquery-countto/jquery.countTo.js')}}"></script>
 
-    <!-- Morris Plugin Js -->
-    <script src="{{asset('public/assets/backend/plugins/raphael/raphael.min.js')}}"></script>
-    <script src="{{asset('public/assets/backend/plugins/morrisjs/morris.js')}}"></script>
 
-    <!-- ChartJs -->
-    <script src="{{asset('public/assets/backend/plugins/chartjs/Chart.bundle.js')}}"></script>
 
-    <!-- Flot Charts Plugin Js -->
-    <script src="{{asset('public/assets/backend/plugins/flot-charts/jquery.flot.js')}}"></script>
-    <script src="{{asset('public/assets/backend/plugins/flot-charts/jquery.flot.resize.js')}}"></script>
-    <script src="{{asset('public/assets/backend/plugins/plugins/flot-charts/jquery.flot.pie.js')}}"></script>
-    <script src="{{asset('public/assets/backend/plugins/flot-charts/jquery.flot.categories.js')}}"></script>
-    <script src="{{asset('public/assets/backend/plugins/flot-charts/jquery.flot.time.js')}}"></script>
-
-    <!-- Sparkline Chart Plugin Js -->
-    <script src="{{asset('public/assets/backend/plugins/jquery-sparkline/jquery.sparkline.js')}}"></script>
+    @stack('js')
 
     <!-- Custom Js -->
     <script src="{{asset('public/assets/backend/js/admin.js')}}"></script>
-    <script src="{{asset('public/assets/backend/js/pages/index.js')}}"></script>
+
 
     <!-- Demo Js -->
     <script src="{{asset('public/assets/backend/js/demo.js')}}"></script>
 
-
-
-
-
-
-    
-    @stack('js')
 
 	
 
