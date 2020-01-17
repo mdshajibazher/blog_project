@@ -26,6 +26,8 @@
 
     <!-- Morris Chart Css-->
     <link href="{{asset('public/assets/backend/plugins/morrisjs/morris.css')}}" rel="stylesheet" />
+     <!-- Tostr Css-->
+     <link href="{{asset('public/css/toastr.min.css')}}" rel="stylesheet" />
 
     @stack('css')
 
@@ -34,6 +36,14 @@
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="{{asset('public/assets/backend/css/themes/all-themes.css')}}" rel="stylesheet" />
+
+
+
+
+
+
+   
+
 
     
     
@@ -80,36 +90,37 @@
     <section class="content">
     @yield('content')
     </section>
+     <!-- Jquery Core Js -->
+     <script src="{{asset('public/assets/backend/plugins/jquery/jquery.min.js')}}"></script>
+     <!-- Tostr Js -->
+     <script src="{{asset('public/js/toastr.min.js')}}"></script>
+     {!! Toastr::message() !!}
+ 
+ 
+     <!-- Bootstrap Core Js -->
+     <script src="{{asset('public/assets/backend/plugins/bootstrap/js/bootstrap.js')}}"></script>
+ 
+     <!-- Select Plugin Js -->
+     <script src="{{asset('public/assets/backend/plugins/bootstrap-select/js/bootstrap-select.js')}}"></script>
+ 
+     <!-- Slimscroll Plugin Js -->
+     <script src="{{asset('public/assets/backend/plugins/jquery-slimscroll/jquery.slimscroll.js')}}"></script>
+ 
+     <!-- Waves Effect Plugin Js -->
+     <script src="{{asset('public/assets/backend/plugins/node-waves/waves.js')}}"></script>
+ 
+ 
+ 
+ 
+     @stack('js')
+ 
+     <!-- Custom Js -->
+     <script src="{{asset('public/assets/backend/js/admin.js')}}"></script>
+ 
+ 
+     <!-- Demo Js -->
+     <script src="{{asset('public/assets/backend/js/demo.js')}}"></script>
 
-    <!-- Jquery Core Js -->
-    <script src="{{asset('public/assets/backend/plugins/jquery/jquery.min.js')}}"></script>
-
-    <!-- Bootstrap Core Js -->
-    <script src="{{asset('public/assets/backend/plugins/bootstrap/js/bootstrap.js')}}"></script>
-
-    <!-- Select Plugin Js -->
-    <script src="{{asset('public/assets/backend/plugins/bootstrap-select/js/bootstrap-select.js')}}"></script>
-
-    <!-- Slimscroll Plugin Js -->
-    <script src="{{asset('public/assets/backend/plugins/jquery-slimscroll/jquery.slimscroll.js')}}"></script>
-
-    <!-- Waves Effect Plugin Js -->
-    <script src="{{asset('public/assets/backend/plugins/node-waves/waves.js')}}"></script>
-
-
-
-
-    @stack('js')
-
-    <!-- Custom Js -->
-    <script src="{{asset('public/assets/backend/js/admin.js')}}"></script>
-
-
-    <!-- Demo Js -->
-    <script src="{{asset('public/assets/backend/js/demo.js')}}"></script>
-
-
-	
 
 </body>
 </html>

@@ -6,46 +6,36 @@
 
 @section('content')
 <div class="row clearfix">
-    <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 offset-lg-1">
+    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
             <div class="header">
                 <h2>
-                    VERTICAL LAYOUT
+                    ADD NEW TAG
                     <small>With floating label</small>
                 </h2>
-                <ul class="header-dropdown m-r--5">
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                        </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
-                        </ul>
-                    </li>
-                </ul>
+
             </div>
             <div class="body">
-                <form>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form action="{{route('admin.tag.store')}}" method="POST">
+                @csrf
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="text" id="email_address" class="form-control">
-                            <label class="form-label">Email Address</label>
+                            <input type="text" id="name" class="form-control" name="name">
+                            <label class="form-label">Tag Name</label>
                         </div>
                     </div>
-
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="password" id="password" class="form-control">
-                            <label class="form-label">Password</label>
-                        </div>
-                    </div>
-
-                    <input type="checkbox" id="remember_me_2" class="filled-in">
-                    <label for="remember_me_2">Remember Me</label>
-                    <br>
-                    <button type="button" class="btn btn-primary m-t-15 waves-effect">LOGIN</button>
+                    
+                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">submit</button>
+                    <a class="btn btn-danger m-t-15 waves-effect" href="{{route('admin.tag.index')}}">back</a>
                 </form>
             </div>
         </div>
