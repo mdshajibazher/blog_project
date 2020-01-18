@@ -2,6 +2,8 @@
 @section('title', 'Tag')
 @push('css')
 <link rel="stylesheet" href="{{asset('public/assets/backend/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" href="{{asset('public/css/sweetalert.min.css')}}">
+
 @endpush
 
 @section('content')
@@ -61,7 +63,11 @@
                                 <tr>
                                     <td>{{$i++}}</td>
                                     <td>{{$item->name}}</td>
-                                    <td><a href="Edit">Edit</a>| <a href="">Delete</a></td>
+                                <td style="display:inline-block"><a class="btn btn-primary" href="{{route('admin.tag.edit',$item->id)}}"><i class="material-icons">edit</i></a> &nbsp;| &nbsp;
+                                     <button onclick="deleteTag({{$item->id}})" class="btn btn-danger" type="submit" value="Delete" ><i class="material-icons">delete</i></button>
+
+                                    <form id="delete-from-{{$item->id}}" style="display: inline" action="{{route('admin.tag.destroy',$item->id)}}" method="POST"> @csrf @method('DELETE') </form> 
+                                </td>
                                 </tr>
                                     
                                 @endforeach
@@ -81,6 +87,7 @@
 
 @endsection
 @push('js')
+<script src="{{asset('public/js/sweetalert.min.js')}}"></script>
 <script src="{{asset('public/assets/backend/plugins/jquery-datatable/jquery.dataTables.js')}}"></script>
 <script src="{{asset('public/assets/backend/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js')}}"></script>
 <script src="{{asset('public/assets/backend/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js')}}"></script>
@@ -91,4 +98,40 @@
 <script src="{{asset('public/assets/backend/plugins/jquery-datatable/extensions/export/buttons.html5.min.js')}}"></script>
 <script src="{{asset('public/assets/backend/plugins/jquery-datatable/extensions/export/buttons.print.min.js')}}"></script>
 <script src="{{asset('public/assets/backend/js/pages/tables/jquery-datatable.js')}}"></script>
+
+<script type="text/javascript">
+    function deleteTag(id){
+        const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
+
+swalWithBootstrapButtons.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Yes, delete it!',
+  cancelButtonText: 'No, cancel!',
+  reverseButtons: true
+}).then((result) => {
+  if (result.value) {
+    event.preventDefault();
+    document.getElementById('delete-from-'+id).submit();
+  } else if (
+    /* Read more about handling dismissals below */
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire(
+      'Cancelled',
+      'Your Data  is safe :)',
+      'error'
+    )
+  }
+});
+    }
+</script>
 @endpush
