@@ -11,6 +11,8 @@ use Brian2694\Toastr\Facades\Toastr;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\CategoryRequest;
+use App\Http\Requests\Admin\CategoryUpdateRequest;
+
 
 class CategoryController extends Controller
 {
@@ -21,6 +23,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
+  
+       
         $categories = Category::latest()->get();
 
         return view('admin.category.index', compact('categories'));
@@ -90,7 +94,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::find($id);
+
+        return view('admin.category.edit', compact('category'));
+
     }
 
     /**
@@ -100,9 +107,44 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryUpdateRequest $request, $id)
     {
-        //
+        $category = Category::find($id);
+        if($request->hasFile('image')){
+            //get form image
+           $image = $request->file('image');
+           $slug = Str::slug($request->name);
+           $current_date = Carbon::now()->toDateString();
+           //get unique name for image
+           $image_name = $slug."-".$current_date.".".$image->getClientOriginalExtension();
+           //location
+           $category_location = public_path('image/category/'.$image_name);
+           $slider_location = public_path('image/slider/'.$image_name);
+
+
+            
+           //resize image for category and upload
+           $category_image = Image::make($image)->resize(1600,479)->save($category_location);
+        //    //Delete Old Category Image 
+        //    if(public_path()->exists('image/category/'.$category_location->image)){
+        //     public_path()->delete('image/category'.$category_location->image); 
+        // }
+
+           $slider_image = Image::make($image)->resize(500,333)->save($slider_location);
+           //Delete Old Slider Image 
+        //    if(public_path()->exists('image/slider'.$cacategory_locationt->image)){
+        //        public_path()->delete('image/slider'.$category_location->image); 
+        //    }
+
+           $category->image = $image_name;
+
+       }
+        
+        $category->name = $request->name;
+        $category->slug = Str::slug($request->name);
+        $category->update();
+        Toastr::success('Category Updated successful!', 'success');
+        return redirect(route('admin.category.index'));
     }
 
     /**
