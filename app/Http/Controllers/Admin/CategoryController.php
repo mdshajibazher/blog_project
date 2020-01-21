@@ -12,15 +12,12 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\CategoryRequest;
 use App\Http\Requests\Admin\CategoryUpdateRequest;
+use File;
 
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function index()
     {
   
@@ -30,22 +27,13 @@ class CategoryController extends Controller
         return view('admin.category.index', compact('categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         return view('admin.category.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(CategoryRequest $request)
     {
         
@@ -75,23 +63,13 @@ class CategoryController extends Controller
         
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         $category = Category::find($id);
@@ -100,13 +78,7 @@ class CategoryController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(CategoryUpdateRequest $request, $id)
     {
         $category = Category::find($id);
@@ -117,24 +89,24 @@ class CategoryController extends Controller
            $current_date = Carbon::now()->toDateString();
            //get unique name for image
            $image_name = $slug."-".$current_date.".".$image->getClientOriginalExtension();
-           //location
+           //location for new image 
            $category_location = public_path('image/category/'.$image_name);
            $slider_location = public_path('image/slider/'.$image_name);
-
-
-            
-           //resize image for category and upload
+           //resize image for category and upload temp 
            $category_image = Image::make($image)->resize(1600,479)->save($category_location);
-        //    //Delete Old Category Image 
-        //    if(public_path()->exists('image/category/'.$category_location->image)){
-        //     public_path()->delete('image/category'.$category_location->image); 
-        // }
-
            $slider_image = Image::make($image)->resize(500,333)->save($slider_location);
-           //Delete Old Slider Image 
-        //    if(public_path()->exists('image/slider'.$cacategory_locationt->image)){
-        //        public_path()->delete('image/slider'.$category_location->image); 
-        //    }
+
+            //Delete Old Category Image 
+           $category_image_path = public_path('image/category/'.$category->image);
+            $slider_image_path = public_path('image/slider/'.$category->image);
+            
+            if (File::exists($category_image_path)) {
+                File::delete($category_image_path);
+            }
+                
+            if (File::exists($slider_image_path)) {
+                File::delete($slider_image_path);
+            }
 
            $category->image = $image_name;
 
@@ -147,14 +119,24 @@ class CategoryController extends Controller
         return redirect(route('admin.category.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+
+        $category_image_path = public_path('image/category/'.$category->image);
+        $slider_image_path = public_path('image/slider/'.$category->image);
+
+        if (File::exists($category_image_path)) {
+            File::delete($category_image_path);
+        }
+        if (File::exists($slider_image_path)) {
+            File::delete($slider_image_path);
+
+        }
+        $category->delete();
+        Toastr::success('Category Deleted successful!', 'success');
+        return redirect(route('admin.category.index'));
     }
 }
