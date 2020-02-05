@@ -1,5 +1,5 @@
 @extends('layouts.backend.app')
-@section('title', 'Category')
+@section('title', 'Post')
 @push('css')
 <link rel="stylesheet" href="{{asset('public/assets/backend/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css')}}">
 <link rel="stylesheet" href="{{asset('public/css/sweetalert.min.css')}}">
@@ -9,9 +9,9 @@
 @section('content')
 
         <div class="block-header">
-            <a class="btn btn-primary waves-effect" href="{{route('admin.category.create')}}">
+            <a class="btn btn-primary waves-effect" href="{{route('admin.post.create')}}">
                 <i class="material-icons">add</i>
-                <span>Create Category</span>
+                <span>Create Post</span>
             </a>
         </div>
 
@@ -21,7 +21,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        CATEGORY LIST
+                    POSTS LIST &nbsp;<span class="badge bg-info">{{$posts->count()}}</span>
                     </h2>
                     <ul class="header-dropdown m-r--5">
                         <li class="dropdown">
@@ -42,14 +42,26 @@
                             <thead>
                                 <tr>
                                     <th>sl.</th>
-                                    <th>Category Name</th>
+                                    <th>Post Name</th>
+                                    <th>Author</th>
+                                    <th>Description</th>
+                                    <th>Image</th>
+                                    <th>Views</th>
+                                    <th>Is Approved</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>sl.</th>
-                                    <th>Category Name</th>
+                                    <th>Post Name</th>
+                                    <th>Author</th>
+                                    <th>Description</th>
+                                    <th>Image</th>
+                                    <th>Views</th>
+                                    <th>Is Approved</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
@@ -57,16 +69,31 @@
                                 @php    
                                 $i=1;
                                 @endphp
-                                @foreach ($categories as $item)
+                                @foreach ($posts as $item)
 
 
                                 <tr>
                                     <td>{{$i++}}</td>
-                                    <td>{{$item->name}} &nbsp;<span class="badge bg-info">{{$item->posts->count()}}</span></td>
-                                <td style="display:inline-block"><a class="btn btn-primary" href="{{route('admin.category.edit',$item->id)}}"><i class="material-icons">edit</i></a> &nbsp;| &nbsp;
-                                     <button onclick="deleteCategory({{$item->id}})" class="btn btn-danger" type="submit" value="Delete" ><i class="material-icons">delete</i></button>
+                                    <td>{{Str::limit($item->title,10)}}</td>
+                                    <td>{{$item->user->name}}</td>
+                                    <td>{{$item->body}}</td>
+                                    <td>{{$item->image}}</td>
+                                    <td>{{$item->view_count}}</td>
+                                    <td>@if($item->is_approved == 0) 
+                                        <span class="badge bg-red">Pending</span>
+                                        @else 
+                                        <span class="badge bg-green">Approved</span>
+                                        @endif
+                                    </td>
+                                    <td>@if($item->status == 0) 
+                                        <span class="badge bg-red">Pending</span>
+                                        @else 
+                                        <span class="badge bg-green">Published</span>
+                                        @endif</td>
+                                <td style="display:inline-block"><a class="btn btn-primary" href="{{route('admin.post.edit',$item->id)}}"><i class="material-icons">edit</i></a> &nbsp;| &nbsp;
+                                     <button onclick="deletePost({{$item->id}})" class="btn btn-danger" type="submit" value="Delete" ><i class="material-icons">delete</i></button>
 
-                                    <form id="delete-from-{{$item->id}}" style="display: inline" action="{{route('admin.category.destroy',$item->id)}}" method="POST"> @csrf @method('DELETE') </form> 
+                                    <form id="delete-from-{{$item->id}}" style="display: inline" action="{{route('admin.post.destroy',$item->id)}}" method="POST"> @csrf @method('DELETE') </form> 
                                 </td>
                                 </tr>
                                     
@@ -100,7 +127,7 @@
 <script src="{{asset('public/assets/backend/js/pages/tables/jquery-datatable.js')}}"></script>
 
 <script type="text/javascript">
-    function deleteCategory(id){
+    function deletePost(id){
         const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
     confirmButton: 'btn btn-success',

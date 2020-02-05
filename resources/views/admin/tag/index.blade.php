@@ -62,7 +62,7 @@
 
                                 <tr>
                                     <td>{{$i++}}</td>
-                                    <td>{{$item->name}}</td>
+                                <td>{{$item->name}} &nbsp;<span class="badge bg-info">{{$item->posts->count()}}</span></td>
                                 <td style="display:inline-block"><a class="btn btn-primary" href="{{route('admin.tag.edit',$item->id)}}"><i class="material-icons">edit</i></a> &nbsp;| &nbsp;
                                      <button onclick="deleteTag({{$item->id}})" class="btn btn-danger" type="submit" value="Delete" ><i class="material-icons">delete</i></button>
 
