@@ -77,7 +77,7 @@
                                     <td>{{Str::limit($item->title,10)}}</td>
                                     <td>{{$item->user->name}}</td>
                                     <td>{{$item->body}}</td>
-                                    <td>{{$item->image}}</td>
+                                <td><img width="50px" src="{{asset('public/image/post/'.$item->image)}}" alt=""></td>
                                     <td>{{$item->view_count}}</td>
                                     <td>@if($item->is_approved == 0) 
                                         <span class="badge bg-red">Pending</span>
