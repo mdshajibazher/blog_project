@@ -76,7 +76,7 @@
                                     <td>{{$i++}}</td>
                                     <td>{{Str::limit($item->title,10)}}</td>
                                     <td>{{$item->user->name}}</td>
-                                    <td>{{$item->body}}</td>
+                                    <td>{{Str::limit($item->body, 100)}}</td>
                                 <td><img width="50px" src="{{asset('public/image/post/'.$item->image)}}" alt=""></td>
                                     <td>{{$item->view_count}}</td>
                                     <td>@if($item->is_approved == 0) 
@@ -90,9 +90,9 @@
                                         @else 
                                         <span class="badge bg-green">Published</span>
                                         @endif</td>
-                                <td style="display:inline-block"><a class="btn btn-primary" href="{{route('admin.post.edit',$item->id)}}"><i class="material-icons">edit</i></a> &nbsp;| &nbsp;
+                                <td style="display:inline-block"><a class="btn btn-primary" href="{{route('admin.post.edit',$item->id)}}"><i class="material-icons">edit</i></a> 
                                      <button onclick="deletePost({{$item->id}})" class="btn btn-danger" type="submit" value="Delete" ><i class="material-icons">delete</i></button>
-
+                                <a class="btn btn-info" href="{{route('admin.post.show',$item->id)}}"><i class="material-icons">visibility</i></a>
                                     <form id="delete-from-{{$item->id}}" style="display: inline" action="{{route('admin.post.destroy',$item->id)}}" method="POST"> @csrf @method('DELETE') </form> 
                                 </td>
                                 </tr>
