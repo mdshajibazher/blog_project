@@ -173,6 +173,16 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+     
+        $post_image_path = public_path('image/post/'.$post->image);
+
+        if (File::exists($post_image_path)) {
+            File::delete($post_image_path);
+        }       
+        $post->categories()->detach();
+        $post->tags()->detach();
+        $post->delete();
+        Toastr::success('Post Deleted successful!', 'success');
+        return redirect(route('admin.post.index'));
     }
 }
