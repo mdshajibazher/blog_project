@@ -78,6 +78,15 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
+
+                </li>
+                <li class="{{Request::is('author/post') ? 'active' : '' }}">
+                    <a href="{{route('author.post.index')}}">
+                            <i class="material-icons">library_books</i>
+                            <span>Posts</span>
+                    </a>
+                </li>
+
                     <li class="header">system</li>
                     <li><a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
