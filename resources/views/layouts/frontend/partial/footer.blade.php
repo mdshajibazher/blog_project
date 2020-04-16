@@ -41,11 +41,25 @@
 
                     <h4 class="title"><b>SUBSCRIBE</b></h4>
                     <div class="input-area">
-                        <form>
-                            <input class="email-input" type="text" placeholder="Enter your email">
+                    <form action="{{route('subscriber.store')}}" method="POST">
+                            @csrf
+                            <input class="email-input @error('email') is-invalid @enderror" type="text" name="email" placeholder="Enter your email">
                             <button class="submit-btn" type="submit"><i class="icon ion-ios-email-outline"></i></button>
+                            
                         </form>
+                        
                     </div>
+                    @if ($errors->any())
+                    <div class="invalid-feedback" style="color: red">
+                                @foreach ($errors->all() as $error)
+
+                                <script type="text/javascript">toastr.options = {"closeButton":true,"debug":false,"newestOnTop":true,"progressBar":true,"positionClass":"toast-top-right","preventDuplicates":false,"onclick":null,"showDuration":"300","hideDuration":"1000","timeOut":"5000","extendedTimeOut":"1000","showEasing":"swing","hideEasing":"linear","showMethod":"fadeIn","hideMethod":"fadeOut"};toastr.error('{{ $error }}','error');</script>
+                                    {{ $error }}
+                                @endforeach
+                        </div>
+                    @endif
+                    
+                      
 
                 </div><!-- footer-section -->
             </div><!-- col-lg-4 col-md-6 -->

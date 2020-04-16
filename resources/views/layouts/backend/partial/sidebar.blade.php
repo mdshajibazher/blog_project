@@ -45,6 +45,12 @@
                     <span>Tag</span>
                 </a>
             </li>
+            <li class="{{Request::is('admin/subscriber') ? 'active' : '' }}">
+                <a href="{{route('admin.subscriber.index')}}">
+                        <i class="material-icons">subscriptions</i>
+                        <span>subscriptions</span>
+                    </a>
+                </li>
             <li class="{{Request::is('admin/category') ? 'active' : '' }}">
                 <a href="{{route('admin.category.index')}}">
                         <i class="material-icons">category</i>
@@ -55,6 +61,12 @@
                 <a href="{{route('admin.post.index')}}">
                         <i class="material-icons">library_books</i>
                         <span>Posts</span>
+                </a>
+            </li>
+            <li class="{{Request::is('admin/pending/post') ? 'active' : '' }}">
+                <a href="{{route('admin.post.pending')}}">
+                        <i class="material-icons">library_books</i>
+                        <span>Pending Posts</span>
                 </a>
             </li>
                     <li class="header">system</li>

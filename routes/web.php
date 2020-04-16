@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::post('subscriber','SubscriberController@store')->name('subscriber.store');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 
@@ -25,6 +27,10 @@ Route::group(['as'=> 'admin.','prefix'=> 'admin', 'namespace' => 'Admin', 'middl
     Route::resource('tag', 'TagController');
     Route::resource('category', 'CategoryController');
     Route::resource('post', 'PostController');
+    Route::get('pending/post', 'PostController@pending')->name('post.pending');
+    Route::put('/post/{id}/approve', 'PostController@approval')->name('post.approve');
+    Route::get('/subscriber','SubscriberController@index')->name('subscriber.index');
+    Route::delete('/subscriber/{id}','SubscriberController@destroy')->name('subscriber.destroy');
 });
 
 Route::group(['as'=> 'author.','prefix'=> 'author', 'namespace' => 'Author', 'middleware' => ['auth', 'author']], function(){

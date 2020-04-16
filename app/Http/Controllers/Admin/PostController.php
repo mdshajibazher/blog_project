@@ -94,8 +94,10 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+     
+            return view('admin.post.show',compact('post'));
 
-        return view('admin.post.show',compact('post'));
+        
     }
 
     /**
@@ -165,6 +167,23 @@ class PostController extends Controller
         return redirect(route('admin.post.index'));
     }
 
+
+
+    public function pending(){
+        $posts = Post::where('is_approved', 0)->get();
+        return view('admin.post.pending',compact('posts'));
+    }
+
+    public function approval($id){
+        $post = Post::find($id);
+        if($post->is_approved == 0){
+            $post->is_approved = 1;
+            $post->save();
+            Toastr::success('Post Approved  successful!', 'success');
+        return redirect()->back();
+
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *

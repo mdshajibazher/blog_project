@@ -91,7 +91,13 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('author.post.show',compact('post'));
+        if($post->user_id != Auth::id()){
+            Toastr::error('You are not Authorized to Access this Post !', 'success');
+        return redirect()->back();
+        }else{
+            return view('author.post.show',compact('post'));
+        }
+        
     }
 
     /**
@@ -102,9 +108,15 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $categories = Category::all();
+        if($post->user_id != Auth::id()){
+        Toastr::error('You are not Authorized to Access this Post !', 'success');
+        return redirect()->back();
+        }else{
+            $categories = Category::all();
         $tags = Tag::all();
         return view('author.post.edit',compact('post','categories', 'tags'));
+        }
+        
     }
 
     /**
@@ -116,6 +128,11 @@ class PostController extends Controller
      */
     public function update(PostUpdateRequest $request, Post $post)
     {
+        
+        if($post->user_id != Auth::id()){
+            Toastr::error('You are not Authorized to Access this Post !', 'success');
+        return redirect()->back();
+        }else{
         if($request->hasFile('image')){
             //get form image
            $image = $request->file('image');
@@ -159,6 +176,7 @@ class PostController extends Controller
 
         Toastr::success('Post Updated To Databse successful!', 'success');
         return redirect(route('author.post.index'));
+        }
     }
 
     /**
@@ -169,6 +187,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        
+        if($post->user_id != Auth::id()){
+            Toastr::error('You are not Authorized to Access this Post !', 'success');
+        return redirect()->back();
+        }else{
         $post_image_path = public_path('image/post/'.$post->image);
 
         if (File::exists($post_image_path)) {
@@ -180,4 +203,5 @@ class PostController extends Controller
         Toastr::success('Post Deleted successful!', 'success');
         return redirect(route('author.post.index'));
     }
+}
 }

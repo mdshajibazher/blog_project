@@ -16,6 +16,7 @@
 
 
 	<!-- Stylesheets -->
+    <link href="{{asset('public/css/toastr.min.css')}}" rel="stylesheet">
 
     <link href="{{asset('public/assets/frontend/css/bootstrap.css')}}" rel="stylesheet">
 
@@ -24,6 +25,23 @@
 	<link href="{{asset('public/assets//frontend/css/ionicons.css')}}" rel="stylesheet">
     
     @stack('css')
+
+
+    	<!-- SCIPTS -->
+
+	<script src="{{asset('public/assets/frontend/js/jquery-3.1.1.min.js')}}"></script>
+
+	<script src="{{asset('public/assets/frontend/js/tether.min.js')}}"></script>
+
+	<script src="{{asset('public/assets/frontend/js/bootstrap.js')}}"></script>
+
+    <script src="{{asset('public/assets/frontend/js/scripts.js')}}"></script>
+         <!-- Tostr Js -->
+    <script src="{{asset('public/js/toastr.min.js')}}"></script>
+    {!! Toastr::message() !!}
+     
+    
+    @stack('js')
 
 </head>
 <body>
@@ -36,17 +54,7 @@
 	
 
 
-	<!-- SCIPTS -->
 
-	<script src="{{asset('public/assets/frontend/js/jquery-3.1.1.min.js')}}"></script>
-
-	<script src="{{asset('public/assets/frontend/js/tether.min.js')}}"></script>
-
-	<script src="{{asset('public/assets/frontend/js/bootstrap.js')}}"></script>
-
-    <script src="{{asset('public/assets/frontend/js/scripts.js')}}"></script>
-    
-    @stack('js')
 
 	
 
