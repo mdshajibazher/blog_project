@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Author;
 
 use App\Tag;
 use App\Post;
+use App\User;
 use App\Category;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use App\Http\Requests\Admin\PostUpdateRequest;
 use App\Http\Requests\Admin\PostValidationRequest;
+use App\Notifications\NewAuthorPost;
+use Illuminate\Support\Facades\Notification;
 
 class PostController extends Controller
 {
@@ -78,7 +81,8 @@ class PostController extends Controller
 
         $post->categories()->attach($request->categories);
         $post->tags()->attach($request->tags);
-
+        $users= User::where('role_id', 1)->get();
+        Notification::send($users, new NewAuthorPost($post));
         Toastr::success('Post Inserted To Databse successful!', 'success');
         return redirect(route('author.post.index'));
     }
